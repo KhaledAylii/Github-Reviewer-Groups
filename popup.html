@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <h2>Github Reviewer Groups</h2>
+    <h5 style="margin-bottom: 4px">
+      Access Key
+      <span id="accessKeyLink">(make one)</span>
+    </h5>
+    <input id="accessKey" type="password" />
+    <div id="groupSelectRow">
+      <select id="groupSelect" aria-placeholder="group select"></select>
+      <button id="createGroupBtn">+</button>
+      <button id="deleteGroupBtn">-</button>
+    </div>
+    <div id="groupBody">
+      <h5>Group Name</h5>
+      <input id="groupName" />
+      <p>Separate usernames with commas</p>
+      <textarea id="usernames"></textarea>
+      <button id="addReviewersBtn">Add Reviewers</button>
+      <p id="infoText"></p>
+      <p id="errorText"></p>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
