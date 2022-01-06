@@ -10,3 +10,9 @@ Create groups of Github users and add them as reviewers to a pull request in one
 - Ensure your current active tab is on a pull request you have permission to edit
 - Click add reviewers
 - Enjoy 10 extra seconds of your life every time (more if you have to remember everyone's logins)
+
+## How to run locally for development:
+- Go to chrome://extensions on your chrome browser
+- Activate developer mode (top-right)
+- click on "Load unpacked" (top-left)
+- Choose the root directory of this project
