@@ -13,7 +13,6 @@ accessKey.oninput = (e) => {
 };
 const parseUsernames = () => {
   const usernames = textarea.value;
-  console.log(usernames);
   return usernames.split(",").map((name) => name.trim());
 };
 
@@ -30,7 +29,6 @@ const loadGroup = (targetGroupNumber) => {
     const data = groupsData.groups;
     groups = data;
     loaded = true;
-    console.log(data);
     if (data) {
       groupSelect.innerHTML = undefined;
       Object.entries(data).forEach(([key, value]) => {
@@ -128,8 +126,6 @@ createGroupBtn.onclick = function (e) {
 
 deleteGroupBtn.onclick = function (e) {
   const deletedGroupNumber = currentGroupNumber;
-  console.log(deletedGroupNumber);
-  console.log(numberOfGroups);
   chrome.storage.sync
     .set({ selectedGroup: !numberOfGroups ? 0 : numberOfGroups - 1 })
     .then(() => {
@@ -174,9 +170,11 @@ const getUserIds = async () => {
   const usersNotFound = [];
   usernames.forEach((username) => {
     promises.push(
-      fetch(`https://api.github.com/users/${username}`).then(async function (
-        response
-      ) {
+      fetch(`https://api.github.com/users/${username}`, {
+        headers: {
+          authorization: `token ${accessKey.value}`,
+        },
+      }).then(async function (response) {
         const json = await response.json();
         const userId = json.id;
         ids.push(userId);
@@ -186,7 +184,7 @@ const getUserIds = async () => {
       })
     );
   });
-  Promise.all(promises).then(() => {
+  Promise.all(promises).finally(() => {
     chrome.tabs.query(
       {
         active: true,
@@ -218,7 +216,6 @@ const getUserIds = async () => {
             else throw response;
           })
           .then((r) => {
-            console.log(r);
             if (usersFound) {
               infoText.innerText =
                 "The following users were added as reviewers: " +
@@ -237,7 +234,6 @@ const getUserIds = async () => {
             } else
               errorText.innerText =
                 "There was an error, please ensure your on a pull request page and try again";
-            console.log(e);
           });
       }
     );
@@ -249,7 +245,6 @@ let addReviewersBtn = document.getElementById("addReviewersBtn");
 addReviewersBtn.onclick = () => {
   errorText.innerText = "";
   infoText.innerText = "";
-  console.log("hi");
   getUserIds();
 };
 
